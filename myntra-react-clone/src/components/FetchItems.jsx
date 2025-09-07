@@ -14,13 +14,14 @@ const FetchItems = () => {
         const signal = controller.signal;
 
         dispatch(fetchStatusActions.markFetchingStarted());
-        fetch("http://localhost:8080/items", { signal })
-            .then((res) => res.json())
-            .then(({ items }) => {
-                dispatch(fetchStatusActions.markFetchDone());
-                dispatch(fetchStatusActions.markFetchingFinished());
-                dispatch(itemsActions.addInitialItems(items[0]));
-            });
+        fetch(`${import.meta.env.VITE_API_URL}`, { signal })
+    .then((res) => res.json())
+    .then(({ items }) => {
+        dispatch(fetchStatusActions.markFetchDone());
+        dispatch(fetchStatusActions.markFetchingFinished());
+        dispatch(itemsActions.addInitialItems(items[0]));
+    });
+
 
         return () => {
             controller.abort();
